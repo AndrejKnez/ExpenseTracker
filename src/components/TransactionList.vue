@@ -4,7 +4,9 @@
     <li v-for="transaction in transactions" :key="transaction.id">
       {{ transaction.transactionText }}
       <span>${{ transaction.transactionPrice }}</span
-      ><button class="delete-btn">x</button>
+      ><button class="delete-btn" @click="deleteTransaction(transaction.id)">
+        x
+      </button>
     </li>
   </ul>
   <p v-else>No transactions yet</p>
@@ -17,4 +19,10 @@ defineProps({
     required: true,
   },
 });
+
+const emit = defineEmits(["delete-transaction"]);
+
+const deleteTransaction = (id) => {
+  emit("delete-transaction", id);
+};
 </script>

@@ -32,7 +32,7 @@ import { uid } from "uid";
 
 const emit = defineEmits(["add-transaction"]);
 
-const transactionText = ref(null);
+const transactionText = ref("");
 const transactionPrice = ref(null);
 
 const addTransaction = () => {
@@ -44,6 +44,10 @@ const addTransaction = () => {
     };
 
     emit("add-transaction", transaction);
+  } else {
+    alert("Both Field Are Required");
   }
+  transactionText.value = "";
+  transactionPrice.value = "";
 };
 </script>
