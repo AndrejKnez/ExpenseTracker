@@ -33,7 +33,7 @@ import { uid } from "uid";
 const emit = defineEmits(["add-transaction"]);
 
 const transactionText = ref("");
-const transactionPrice = ref(null);
+const transactionPrice = ref("");
 
 const addTransaction = () => {
   if (transactionText.value !== "" && transactionPrice.value !== 0) {

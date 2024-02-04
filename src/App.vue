@@ -20,51 +20,41 @@ import Balance from "./components/Balance.vue";
 import IncomeExpenses from "./components/IncomeExpenses.vue";
 import TransactionList from "./components/TransactionList.vue";
 import AddTransaction from "./components/AddTransaction.vue";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 const transactions = ref([]);
-const totalIncomes = ref(0);
-const totalExpenses = ref(0);
-const totalBalance = ref(0);
 
 const addTransaction = (transaction) => {
   transactions.value.push(transaction);
-  getIncome();
-  getExpense();
-  getTotal();
 };
 
 const deleteTransaction = (id) => {
   transactions.value = transactions.value.filter((el) => el.id !== id);
-  getIncome();
-  getExpense();
-  getTotal();
 };
 
-const getIncome = () => {
+const totalIncomes = computed(() => {
   const incomes = transactions.value.filter((el) => el.transactionPrice > 0);
   const totalIncome = incomes.reduce((acc, val) => {
     return acc + val.transactionPrice;
   }, 0);
 
-  totalIncomes.value = totalIncome;
-};
+  return totalIncome;
+});
 
-const getExpense = () => {
+const totalExpenses = computed(() => {
   const expenses = transactions.value.filter((el) => el.transactionPrice < 0);
   const totalExpense = expenses.reduce((acc, val) => {
     return acc + val.transactionPrice;
   }, 0);
+  return totalExpense;
+});
 
-  totalExpenses.value = totalExpense;
-};
-
-const getTotal = () => {
+const totalBalance = computed(() => {
   const total = transactions.value.reduce((acc, val) => {
     return acc + val.transactionPrice;
   }, 0);
 
-  totalBalance.value = total;
-};
+  return total;
+});
 </script>
 

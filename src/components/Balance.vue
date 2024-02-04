@@ -6,7 +6,7 @@
 <script setup>
 defineProps({
   totalBalance: {
-    type: String,
+    type: Number,
     required: true,
   },
 });
