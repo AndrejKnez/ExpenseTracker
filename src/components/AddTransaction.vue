@@ -36,7 +36,7 @@ const transactionText = ref("");
 const transactionPrice = ref("");
 
 const addTransaction = () => {
-  if (transactionText.value !== "" && transactionPrice.value !== 0) {
+  if (transactionText.value !== "" && transactionPrice.value !== "") {
     const transaction = {
       id: uid(),
       transactionText: transactionText.value,

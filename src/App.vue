@@ -20,16 +20,19 @@ import Balance from "./components/Balance.vue";
 import IncomeExpenses from "./components/IncomeExpenses.vue";
 import TransactionList from "./components/TransactionList.vue";
 import AddTransaction from "./components/AddTransaction.vue";
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 
 const transactions = ref([]);
 
 const addTransaction = (transaction) => {
   transactions.value.push(transaction);
+
+  saveTransactionsToLocalStorage();
 };
 
 const deleteTransaction = (id) => {
   transactions.value = transactions.value.filter((el) => el.id !== id);
+  saveTransactionsToLocalStorage();
 };
 
 const totalIncomes = computed(() => {
@@ -55,6 +58,18 @@ const totalBalance = computed(() => {
   }, 0);
 
   return total;
+});
+
+const saveTransactionsToLocalStorage = () => {
+  localStorage.setItem("transactions", JSON.stringify(transactions.value));
+};
+
+onMounted(() => {
+  const savedTransactions = JSON.parse(localStorage.getItem("transactions"));
+
+  if (savedTransactions) {
+    transactions.value = savedTransactions;
+  }
 });
 </script>
 
