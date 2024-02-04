@@ -1,7 +1,7 @@
 <template>
   <Header />
   <div class="container">
-    <Balance />
+    <Balance :totalBalance="totalBalance" />
     <IncomeExpenses
       :totalIncomes="totalIncomes"
       :totalExpenses="totalExpenses"
@@ -25,17 +25,20 @@ import { ref } from "vue";
 const transactions = ref([]);
 const totalIncomes = ref(0);
 const totalExpenses = ref(0);
+const totalBalance = ref(0);
 
 const addTransaction = (transaction) => {
   transactions.value.push(transaction);
   getIncome();
   getExpense();
+  getTotal();
 };
 
 const deleteTransaction = (id) => {
   transactions.value = transactions.value.filter((el) => el.id !== id);
   getIncome();
   getExpense();
+  getTotal();
 };
 
 const getIncome = () => {
@@ -54,6 +57,14 @@ const getExpense = () => {
   }, 0);
 
   totalExpenses.value = totalExpense;
+};
+
+const getTotal = () => {
+  const total = transactions.value.reduce((acc, val) => {
+    return acc + val.transactionPrice;
+  }, 0);
+
+  totalBalance.value = total;
 };
 </script>
 
